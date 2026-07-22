@@ -7,11 +7,13 @@
  *   5. Footer
  */
 
-import NavBar from '../components/NavBar';
+// import NavBar from '../components/NavBar';
 import Button from '../components/Button';
 import HeroVisual from '../components/HeroVisual';
 import FeatureCard from '../components/FeatureCard';
 import './LandingPage.css';
+import { Link } from "react-router-dom";
+
 
 /* Feature data - array of objects to map over */
 const features = [
@@ -42,11 +44,9 @@ const features = [
 ];
 
 function LandingPage() {
+
   return (
     <>
-      {/* ===== Section 1: Navbar ===== */}
-      <NavBar />
-
       {/* ===== Section 2: Hero Section ===== */}
       <section className="hero" id="home">
         <div className="hero-container">
@@ -67,7 +67,11 @@ function LandingPage() {
               and boost your portfolio.
             </p>
             <div className="hero-buttons">
-              <Button variant="primary">Generate Projects</Button>
+              <Link to="/login">
+                <Button variant="primary">
+                   Generate Projects
+                </Button>
+              </Link>
               <Button variant="secondary">Learn More</Button>
             </div>
           </div>

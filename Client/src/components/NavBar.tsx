@@ -1,68 +1,131 @@
-/* NavBar Component
- * A sticky navigation bar with logo and links.
- * Responsive: shows hamburger menu on smaller screens.
- */
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-import { useState } from 'react';
-import './NavBar.css';
-
-/* The links shown in the navbar */
-const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'Features', href: '#features' },
-  { label: 'About', href: '#about' },
-];
+import "./NavBar.css";
 
 function NavBar() {
-  /* State to toggle mobile menu open/close */
   const [menuOpen, setMenuOpen] = useState(false);
 
-  /* Function to close the mobile menu */
-  const handleLinkClick = () => {
+
+  const closeMenu = () => {
     setMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo on the left */}
-        <div className="navbar-logo">
-          ProjectPilot
-        </div>
 
-        {/* Hamburger button - only visible on mobile */}
+        {/* Logo */}
+
+        <NavLink
+          to="/"
+          className="navbar-logo"
+          onClick={() =>{
+            closeMenu();
+
+            window.history.replaceState(
+              null,
+              "",
+              "/",
+            );
+
+            window.scrollTo({
+              top:0,
+              behavior:"smooth",            
+            });
+          }}
+        >
+          Project<span>Pilot</span>
+        </NavLink>
+
+        {/* Mobile */}
+
         <button
           className="hamburger"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
         >
-          {/* Three horizontal lines */}
           <span></span>
           <span></span>
           <span></span>
         </button>
 
-        {/* Navigation links - hidden on mobile unless menu is open */}
-        <ul className={`navbar-links ${menuOpen ? 'navbar-links--open' : ''}`}>
-          {navLinks.map((link) => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                className="nav-link"
-                onClick={handleLinkClick}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          {/* Auth buttons */}
+        {/* Navigation */}
+
+        <ul
+          className={`navbar-links ${
+            menuOpen ? "navbar-links--open" : ""
+          }`}
+        >
           <li>
-            <a href="#login" className="nav-link">Login</a>
+            <NavLink
+              to="/"
+              className="nav-link"
+              onClick={() => {
+              closeMenu();
+
+              window.history.replaceState(
+              null,
+            "",
+          "/"
+        );
+
+              window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
+        >
+              Home  
+            </NavLink>
           </li>
+
           <li>
-            <a href="#signup" className="nav-link nav-link--accent">Sign Up</a>
+            <NavLink
+              to="/#features"
+              className="nav-link"
+              onClick={closeMenu}>
+              Features
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/#about"
+              className="nav-link"
+              onClick={closeMenu}>
+              About
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/login"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link active"
+                  : "nav-link"
+              }
+              onClick={closeMenu}
+            >
+              Login
+            </NavLink>
+          </li>
+
+          <li>
+            <NavLink
+              to="/signup"
+              className={({ isActive }) =>
+                isActive
+                  ? "nav-link nav-link--accent active-signup"
+                  : "nav-link nav-link--accent"
+              }
+              onClick={closeMenu}
+            >
+              Sign Up
+            </NavLink>
           </li>
         </ul>
+
       </div>
     </nav>
   );

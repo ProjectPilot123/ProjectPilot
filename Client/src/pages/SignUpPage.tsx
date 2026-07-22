@@ -1,0 +1,105 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import AuthLayout from "../components/AuthLayout";
+import Button from "../components/Button";
+
+import "./Auth.css";
+
+function SignupPage() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log({
+      fullName,
+      email,
+      password,
+      confirmPassword,
+    });
+
+    // TODO:
+    // Call Signup API
+  };
+
+  return (
+    <AuthLayout
+      title="Create Account"
+      subtitle="Start your journey with AI-powered project recommendations."
+    >
+      <form className="auth-form" onSubmit={handleSubmit}>
+        {/* Full Name */}
+        <div className="form-group">
+          <label>Full Name</label>
+
+          <input
+            type="text"
+            placeholder="Enter your full name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Email */}
+        <div className="form-group">
+          <label>Email Address</label>
+
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Password */}
+        <div className="form-group">
+          <label>Password</label>
+
+          <input
+            type="password"
+            placeholder="Create a password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        {/* Confirm Password */}
+        <div className="form-group">
+          <label>Confirm Password</label>
+
+          <input
+            type="password"
+            placeholder="Re-enter your password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div className="auth-button">
+          <Button variant="primary">
+            Create Account
+          </Button>
+        </div>
+
+        <div className="auth-footer">
+          <span>Already have an account?</span>
+
+          <Link to="/login">
+            Login
+          </Link>
+        </div>
+      </form>
+    </AuthLayout>
+  );
+}
+
+export default SignupPage;

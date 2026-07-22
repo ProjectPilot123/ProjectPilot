@@ -19,12 +19,11 @@
 
     border-radius:50%;
 
-    background:radial-gradient(
-        circle,
-        rgba(146,220,229,.22) 0%,
-        rgba(255,252,153,.06) 35%,
-        transparent 72%
-    );
+    background: radial-gradient(
+    circle,
+    rgba(146,220,229,.18) 0%,
+    rgba(255,252,153,.12) 40%,
+    transparent 75%);
 
     filter:blur(20px);
 

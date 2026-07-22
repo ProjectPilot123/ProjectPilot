@@ -1,125 +1,248 @@
-/* ===== Navbar Styles ===== */
+/* ==========================
+   NAVBAR
+========================== */
 
-/* Sticky navbar that stays at the top when scrolling */
-.navbar{
-    position:sticky;
-    top:0;
-    z-index:100;
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 
-    background:rgba(16,20,24,.78);
+  background: var(--color-bg-navbar);
 
-    backdrop-filter:blur(16px);
+  border-bottom: 1px solid rgba(255,255,255,.05);
 
-    border-bottom:1px solid rgba(146,220,229,.08);
+  backdrop-filter: blur(10px);
 }
 
-/* Inner container for centering content */
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
+
+  height: 64px;
+
   padding: 0 20px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px;
 }
 
-/* Logo text */
-.navbar-logo{
-    font-size:1.45rem;
-    font-weight:800;
+/* ==========================
+   LOGO
+========================== */
 
-    color:#FFFC99;
+.navbar-logo {
+  font-size: 1.45rem;
+  font-weight: 800;
 
-    letter-spacing:-.5px;
+  color: var(--color-white);
 
-    cursor:pointer;
+  text-decoration: none;
+
+  letter-spacing: -.5px;
+
+  transition: .25s ease;
 }
 
-/* Navigation links container */
-.navbar-links{
-    display:flex;
-    align-items:center;
-
-    gap:34px;
+.navbar-logo span {
+  color: var(--color-highlight);
 }
 
-/* Individual nav link styling */
-.nav-link{
-    font-size:.96rem;
-
-    color:#66717E;
-
-    font-weight:500;
-
-    transition:.3s ease;
-
-    position:relative;
+.navbar-logo:hover {
+  transform: scale(1.03);
 }
 
-.nav-link:hover{
-    color:#92DCE5;
+/* ==========================
+   LINKS
+========================== */
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 34px;
 }
 
-/* Sign Up link gets accent color */
-.nav-link--accent{
-    background:#92DCE5;
+/* Link + Button share same look */
 
-    color:#101418;
+.nav-link,
+.nav-button {
 
-    padding:10px 18px;
+  font-size: .96rem;
 
-    border-radius:10px;
+  color: var(--color-text-muted);
 
-    font-weight:700;
+  font-weight: 500;
+
+  transition: .25s ease;
+
+  position: relative;
+
+  text-decoration: none;
 }
 
-.nav-link--accent:hover{
-    background:#A6EAF2;
-}
+/* Remove button appearance */
 
-/* Hamburger button - hidden on desktop */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
+.nav-button {
+
   background: none;
+
   border: none;
+
   cursor: pointer;
-  padding: 5px;
+
+  font-family: inherit;
+
+  padding: 0;
+
+}
+
+/* underline animation */
+
+.nav-link::after,
+.nav-button::after {
+
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -6px;
+
+  width: 0;
+  height: 2px;
+
+  background: var(--color-accent-primary);
+
+  transition: width .25s ease;
+
+}
+
+.nav-link:hover,
+.nav-button:hover {
+
+  color: var(--color-accent-primary);
+
+}
+
+.nav-link:hover::after,
+.nav-button:hover::after {
+
+  width: 100%;
+
+}
+
+/* ==========================
+   ACTIVE
+========================== */
+
+.nav-link.active {
+
+  color: var(--color-accent-primary);
+
+}
+
+.nav-link.active::after {
+
+  width: 100%;
+
+}
+
+/* ==========================
+   SIGNUP BUTTON
+========================== */
+
+.nav-link--accent {
+
+  background: var(--color-accent-primary);
+
+  color: var(--color-bg-primary);
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  font-weight: 700;
+
+}
+
+.nav-link--accent::after {
+
+  display: none;
+
+}
+
+.nav-link--accent:hover {
+
+  background: #a6eaf2;
+
+  color: var(--color-bg-primary);
+
+}
+
+.active-signup {
+
+  box-shadow: 0 0 0 2px var(--color-highlight);
+
+}
+
+/* ==========================
+   MOBILE
+========================== */
+
+.hamburger {
+
+  display: none;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  background: none;
+
+  border: none;
+
+  cursor: pointer;
+
 }
 
 .hamburger span {
-  display: block;
+
   width: 24px;
   height: 2px;
-  background-color: var(--color-white);
-  transition: background-color 0.2s ease;
+
+  background: var(--color-white);
+
 }
 
-/* ===== Mobile Responsive ===== */
-@media (max-width: 768px) {
-  /* Show hamburger button */
+@media (max-width:768px) {
+
   .hamburger {
     display: flex;
   }
 
-  /* Hide links by default, show as dropdown when open */
   .navbar-links {
+
     display: none;
+
     position: absolute;
+
     top: 64px;
+
     left: 0;
     right: 0;
-    background-color: var(--color-bg-navbar);
+
+    background: var(--color-bg-navbar);
+
     flex-direction: column;
-    padding: 20px;
-    gap: 16px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+    gap: 20px;
+
+    padding: 24px;
+
   }
 
-  /* When menu is open, show the links */
   .navbar-links--open {
     display: flex;
   }
+
 }
