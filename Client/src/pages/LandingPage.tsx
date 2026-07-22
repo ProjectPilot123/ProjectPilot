@@ -1,102 +1,171 @@
-import React from 'react';
-import Navbar from '../components/NavBar';
+/* LandingPage Component
+ * The main page that brings together all sections:
+ *   1. Navbar
+ *   2. Hero Section (left text + right HeroVisual)
+ *   3. Features Section (4 FeatureCards)
+ *   4. About Section
+ *   5. Footer
+ */
+
+import NavBar from '../components/NavBar';
 import Button from '../components/Button';
+import HeroVisual from '../components/HeroVisual';
 import FeatureCard from '../components/FeatureCard';
-import HeroPreviewCard from '../components/HeroPreviewCard';
+import './LandingPage.css';
 
-// Icons for Feature Cards (using simple emojis for now, can be replaced with SVG/React Icons)
-const icons = {
-  personalized: '💡',
-  aiRecommendations: '🤖',
-  saveProjects: '🔖',
-};
+/* Feature data - array of objects to map over */
+const features = [
+  {
+    icon: '🤖',
+    title: 'AI-Powered Recommendations',
+    description:
+      'Get smart project suggestions powered by AI that match your skill level and interests.',
+  },
+  {
+    icon: '🎯',
+    title: 'Skill-Based Suggestions',
+    description:
+      'Projects tailored to the technologies and frameworks you already know or want to learn.',
+  },
+  {
+    icon: '📄',
+    title: 'Resume Ready Projects',
+    description:
+      'Build impressive projects that look great on your resume and help you stand out in interviews.',
+  },
+  {
+    icon: '⚡',
+    title: 'Fast Project Generation',
+    description:
+      'Generate multiple project ideas in seconds. No more spending hours deciding what to build.',
+  },
+];
 
-const LandingPage: React.FC = () => {
+function LandingPage() {
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 font-sans relative">
-      {/* 1. Navbar Section */}
-      <Navbar />
+    <>
+      {/* ===== Section 1: Navbar ===== */}
+      <NavBar />
 
-      {/* Main Content Wrapper */}
-      <main className="relative z-10 pt-20">
-        {/* 2. Hero Section */}
-        <section className="max-w-7xl mx-auto px-8 lg:px-12 pt-20 pb-10 min-h-[85vh] flex flex-col md:flex-row items-center justify-center gap-16">
-          <div className="flex-1 max-w-2xl">
-            <h1 className="text-4xl lg:text-6xl font-extrabold text-white mb-6 leading-tight">
-              Generate Your Perfect Project Idea With <span className="text-indigo-500">AI</span>
-            </h1>
-            <p className="text-lg text-gray-300 mb-8 max-w-xl mx-auto md:mx-0">
-              Stop searching endlessly. Get tailored project ideas based on your skills and interests, designed to help you learn and succeed.
-            </p>
-            <Button variant="primary" size="lg">
-              Generate Ideas
-            </Button>
-          </div>
-          <div className="flex-1 flex justify-center">
-            <HeroPreviewCard />
-          </div>
-        </section>
-
-        {/* 3. Features Section */}
-        <section 
-          id="features" 
-          className="mt-24 py-20 bg-gray-800 border-t border-b border-gray-700">
-          <div className="max-w-6xl mx-auto px-8">
-            <h2 className="text-3xl font-bold text-center text-white mb-12">
-              How It Works
+      {/* ===== Section 2: Hero Section ===== */}
+      <section className="hero" id="home">
+        <div className="hero-container">
+          {/* Left side: text content */}
+          <div className="hero-content">
+            <h1 className="hero-title">
+            <div className="hero-badge">
+            ✨<span>AI-Powered</span>Project Recommendation</div>
+            <span className="hero-white">Project</span>
+            <span className="hero-blue">Pilot</span></h1>
+            <h2 className="hero-subtitle">
+              Generate personalized software project ideas using AI.
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 justify-items-center">
-              <FeatureCard
-                icon={icons.personalized}
-                title="Personalized Ideas"
-                description="Tell us your skills and interests, and our AI will craft unique project ideas just for you."
-              />
-              <FeatureCard
-                icon={icons.aiRecommendations}
-                title="AI Recommendations"
-                description="Leverage intelligent suggestions to find projects that match your learning goals."
-              />
-              <FeatureCard
-                icon={icons.saveProjects}
-                title="Save Your Projects"
-                description="Keep track of your favorite ideas and revisit them anytime to start building."
-              />
+            <p className="hero-description">
+              ProjectPilot helps students and developers discover the perfect
+              project to build. Simply tell us your skills and interests, and our
+              AI generates personalized software project ideas that challenge you
+              and boost your portfolio.
+            </p>
+            <div className="hero-buttons">
+              <Button variant="primary">Generate Projects</Button>
+              <Button variant="secondary">Learn More</Button>
             </div>
           </div>
-        </section>
 
-        {/* 4. About Section */}
-        <section id="about" className="container mx-auto px-4 py-16 text-center max-w-3xl">
-          <h2 className="text-3xl font-bold text-white mb-8">
-            About the Platform
-          </h2>
-          <p className="text-lg text-gray-300 leading-relaxed">
-            AI Project Generator is built for students and developers looking for their next coding challenge. Our platform simplifies the process of finding relevant project ideas, providing clear descriptions and potential learning outcomes. Focus on building, not brainstorming.
-          </p>
-        </section>
-      </main>
-
-      {/* 5. Footer Section */}
-      <footer className="bg-gray-900 py-8 border-t border-gray-800 text-center">
-        <div className="container mx-auto px-4">
-          <p className="text-gray-500">
-            &copy; {new Date().getFullYear()} AI Project Generator. All rights reserved.
-          </p>
-          <div className="mt-4 space-x-4">
-            <a href="#" className="text-gray-500 hover:text-indigo-400 transition-colors text-sm">
-              About
-            </a>
-            <a href="#" className="text-gray-500 hover:text-indigo-400 transition-colors text-sm">
-              Contact
-            </a>
-            <a href="#" className="text-gray-500 hover:text-indigo-400 transition-colors text-sm">
-              Privacy Policy
-            </a>
+          {/* Right side: floating preview cards */}
+          <div className="hero-visual-side">
+            <HeroVisual />
           </div>
         </div>
+      </section>
+
+      {/* ===== Section 3: Features Section ===== */}
+      <section className="section" id="features">
+        <div className="section-container">
+        <h2 className="section-heading">Why Choose ProjectPilot?</h2>
+
+        <p className="section-text" style={{ marginBottom: "48px" }}>
+        Everything you need to find your next great project idea.</p>
+
+        <div className="features-grid">
+          {features.map((feature) => (
+            <FeatureCard
+              key={feature.title}
+              icon={feature.icon}
+              title={feature.title}
+              description={feature.description}
+              />
+            ))}
+          </div>
+         </div>
+      </section>
+
+      {/* ===== Section 4: About Section ===== */}
+      <section className="section" id="about">
+        <div className="section-container">
+
+        <h2 className="section-heading about-heading">About ProjectPilot</h2>
+        <div className="about-section">
+        <div className="about-content">
+          <p>
+            Every year, thousands of students spend hours — sometimes days —
+            trying to decide what project to build. Whether it is for a college
+            assignment, a personal portfolio, or a hackathon, finding the right
+            idea that matches your skill level is one of the biggest challenges.
+          </p>
+          <p>
+            ProjectPilot solves this problem by using AI to generate personalized
+            software project ideas based on your skills, interests, and the
+            technologies you want to learn. Instead of scrolling through
+            generic project lists, you get suggestions that are tailored
+            specifically to you.
+          </p>
+          <p>
+            Our goal is simple: help every developer build something meaningful
+            without the stress of coming up with an idea. Let ProjectPilot be
+            your personal project brainstorming assistant.
+            </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Section 5: Footer ===== */}
+      <footer className="footer">
+        <div className="footer-container">
+          {/* Footer columns */}
+          <div className="footer-column">
+            <h3 className="footer-logo">ProjectPilot</h3>
+            <p className="footer-tagline">
+              Your AI-powered project idea generator.
+            </p>
+          </div>
+
+          <div className="footer-column">
+            <h4 className="footer-heading">Quick Links</h4>
+            <ul className="footer-links">
+              <li><a href="#home">Home</a></li>
+              <li><a href="#features">Features</a></li>
+              <li><a href="#about">About</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-column">
+            <h4 className="footer-heading">Contact</h4>
+            <ul className="footer-links">
+              <li><a href="mailto:contact@projectpilot.com">Email Us</a></li>
+              <li><a href="#">GitHub</a></li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Copyright bar */}
+        <div className="footer-bottom">
+          <p>&copy; 2026 ProjectPilot. All rights reserved.</p>
+        </div>
       </footer>
-    </div>
+    </>
   );
-};
+}
 
 export default LandingPage;

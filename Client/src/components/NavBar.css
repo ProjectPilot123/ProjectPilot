@@ -1,0 +1,125 @@
+/* ===== Navbar Styles ===== */
+
+/* Sticky navbar that stays at the top when scrolling */
+.navbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+
+    background:rgba(16,20,24,.78);
+
+    backdrop-filter:blur(16px);
+
+    border-bottom:1px solid rgba(146,220,229,.08);
+}
+
+/* Inner container for centering content */
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+/* Logo text */
+.navbar-logo{
+    font-size:1.45rem;
+    font-weight:800;
+
+    color:#FFFC99;
+
+    letter-spacing:-.5px;
+
+    cursor:pointer;
+}
+
+/* Navigation links container */
+.navbar-links{
+    display:flex;
+    align-items:center;
+
+    gap:34px;
+}
+
+/* Individual nav link styling */
+.nav-link{
+    font-size:.96rem;
+
+    color:#66717E;
+
+    font-weight:500;
+
+    transition:.3s ease;
+
+    position:relative;
+}
+
+.nav-link:hover{
+    color:#92DCE5;
+}
+
+/* Sign Up link gets accent color */
+.nav-link--accent{
+    background:#92DCE5;
+
+    color:#101418;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    font-weight:700;
+}
+
+.nav-link--accent:hover{
+    background:#A6EAF2;
+}
+
+/* Hamburger button - hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--color-white);
+  transition: background-color 0.2s ease;
+}
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 768px) {
+  /* Show hamburger button */
+  .hamburger {
+    display: flex;
+  }
+
+  /* Hide links by default, show as dropdown when open */
+  .navbar-links {
+    display: none;
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg-navbar);
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  /* When menu is open, show the links */
+  .navbar-links--open {
+    display: flex;
+  }
+}

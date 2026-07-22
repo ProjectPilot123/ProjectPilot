@@ -1,0 +1,59 @@
+/* ===== Base Button ===== */
+
+.btn{
+    padding:14px 30px;
+
+    font-size:1rem;
+    font-weight:600;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    border:none;
+
+    transition:.3s ease;
+
+    font-family:inherit;
+}
+
+.btn:active{
+    transform:scale(.96);
+}
+
+/* ===== Primary ===== */
+
+.btn-primary{
+    background:#92DCE5;
+    color:#101418;
+
+    box-shadow:
+        0 10px 25px rgba(146,220,229,.18);
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+
+    background:#A5E6EE;
+
+    box-shadow:
+        0 18px 40px rgba(146,220,229,.30);
+}
+
+/* ===== Secondary ===== */
+
+.btn-secondary{
+    background:transparent;
+
+    color:#F5F5F5;
+
+    border:1px solid #506C64;
+}
+
+.btn-secondary:hover{
+    background:#506C64;
+
+    border-color:#92DCE5;
+
+    color:white;
+}

@@ -1,0 +1,75 @@
+/* ===== Feature Card Styles ===== */
+
+.feature-card{
+    height:100%;
+    background:linear-gradient(
+        180deg,
+        rgba(32,40,48,.95),
+        rgba(22,28,34,.95)
+    );
+
+    border:1px solid rgba(146,220,229,.08);
+
+    border-radius:18px;
+
+    padding:36px 28px;
+
+    text-align:center;
+
+    transition:all .3s ease;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+/* Lift effect on hover */
+.feature-card:hover{
+    transform:translateY(-8px);
+
+    border-color:rgba(146,220,229,.35);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.35),
+        0 0 25px rgba(146,220,229,.08);
+}
+
+/* Icon circle container */
+.feature-card-icon{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    width:64px;
+    height:64px;
+
+    margin:0 auto 24px;
+
+    border-radius:16px;
+
+    background:rgba(146,220,229,.12);
+
+    border:1px solid rgba(146,220,229,.18);
+
+    font-size:2rem;
+}
+
+/* Card title */
+.feature-card-title{
+    font-size:1.25rem;
+    font-weight:700;
+    margin-bottom:14px;
+}
+
+/* Card description text */
+.feature-card-description{
+    color:#66717E;
+    line-height:1.8;
+}
+
+/* Responsive: smaller padding on mobile */
+@media (max-width: 768px) {
+  .feature-card {
+    padding: 24px 16px;
+  }
+}

@@ -1,23 +1,30 @@
-import React from 'react';
+/* FeatureCard Component
+ * A reusable card for displaying a feature with an icon, title, and description.
+ * Props:
+ *   - icon: a simple emoji or unicode character as the icon
+ *   - title: the feature name
+ *   - description: a short description of the feature
+ */
+
+import './FeatureCard.css';
 
 interface FeatureCardProps {
-  icon: React.ReactNode; // For simplicity, passing ReactNode for icon
+  icon: string;
   title: string;
   description: string;
 }
 
-const FeatureCard: React.FC<FeatureCardProps> = ({
-  icon,
-  title,
-  description,
-}) => {
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
   return (
-    <div className="p-6 rounded-lg border border-gray-700 bg-gray-800 shadow-md hover:shadow-lg transition-shadow duration-200">
-      <div className="text-indigo-400 mb-4 text-3xl">{icon}</div>
-      <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
-      <p className="text-gray-400 text-base">{description}</p>
+    <div className="feature-card">
+      {/* Icon displayed as a large emoji/character */}
+      <div className="feature-card-icon">{icon}</div>
+      {/* Feature title */}
+      <h3 className="feature-card-title">{title}</h3>
+      {/* Feature description */}
+      <p className="feature-card-description">{description}</p>
     </div>
   );
-};
+}
 
 export default FeatureCard;

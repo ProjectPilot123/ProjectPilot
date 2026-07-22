@@ -1,28 +1,35 @@
-import React from 'react';
-import Button from './button';
+/* HeroPreviewCard Component
+ * A small card that represents a generated project idea.
+ * Used inside the HeroVisual to show floating project previews.
+ * Props:
+ *   - title: project name
+ *   - tags: array of skill/tech tags
+ *   - delay: CSS animation delay for staggered floating effect
+ */
 
-const HeroPreviewCard: React.FC = () => {
+import './HeroPreviewCard.css';
+
+interface HeroPreviewCardProps {
+  title: string;
+  tags: string[];
+  delay: string;
+}
+
+function HeroPreviewCard({ title, tags, delay }: HeroPreviewCardProps) {
   return (
-    <div className="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700 w-full max-w-lg">
-      <h3 className="text-xl font-semibold text-white mb-4">Your Skills:</h3>
-      <div className="flex flex-wrap gap-2 mb-6">
-        <span className="px-3 py-1 bg-indigo-600/30 text-indigo-300 text-sm rounded-full">React</span>
-        <span className="px-3 py-1 bg-green-600/30 text-green-300 text-sm rounded-full">Python</span>
-        <span className="px-3 py-1 bg-blue-600/30 text-blue-300 text-sm rounded-full">Machine Learning</span>
+    <div className="hero-preview-card" style={{ animationDelay: delay }}>
+      {/* Project title */}
+      <div className="hero-preview-card-title">{title}</div>
+      {/* Tech tags as small badges */}
+      <div className="hero-preview-card-tags">
+        {tags.map((tag) => (
+          <span key={tag} className="hero-preview-tag">
+            {tag}
+          </span>
+        ))}
       </div>
-
-      <Button variant="primary" className="w-full mb-6">
-        Generate
-      </Button>
-
-      <h3 className="text-xl font-semibold text-white mb-4">AI Suggestions:</h3>
-      <ul className="space-y-3">
-        <li className="bg-gray-700 p-3 rounded-lg text-gray-200">1. Smart Attendance System</li>
-        <li className="bg-gray-700 p-3 rounded-lg text-gray-200">2. AI Resume Analyzer</li>
-        <li className="bg-gray-700 p-3 rounded-lg text-gray-200">3. Learning Platform</li>
-      </ul>
     </div>
   );
-};
+}
 
 export default HeroPreviewCard;
