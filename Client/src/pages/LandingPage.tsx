@@ -12,7 +12,8 @@ import Button from '../components/Button';
 import HeroVisual from '../components/HeroVisual';
 import FeatureCard from '../components/FeatureCard';
 import './LandingPage.css';
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated } from "../utils/auth";
 
 
 /* Feature data - array of objects to map over */
@@ -45,6 +46,16 @@ const features = [
 
 function LandingPage() {
 
+  const navigate = useNavigate();
+
+  const handleGenerateProjects = () => {
+  if (isAuthenticated()) {
+    navigate("/dashboard");
+  } else {
+    navigate("/signup");
+  }
+};
+
   return (
     <>
       {/* ===== Section 2: Hero Section ===== */}
@@ -67,11 +78,11 @@ function LandingPage() {
               and boost your portfolio.
             </p>
             <div className="hero-buttons">
-              <Link to="/login">
-                <Button variant="primary">
-                   Generate Projects
-                </Button>
-              </Link>
+              <Button
+                variant="primary"
+                onClick={handleGenerateProjects}>
+                Generate Projects
+              </Button>
               <Button variant="secondary">Learn More</Button>
             </div>
           </div>

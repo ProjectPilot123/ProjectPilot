@@ -1,10 +1,22 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import {
+  isAuthenticated,
+  logout,
+} from "../utils/auth";
 
 import "./NavBar.css";
 
 function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navigate = useNavigate();
+
+const handleLogout = () => {
+  logout();
+  closeMenu();
+  navigate("/");
+};
 
 
   const closeMenu = () => {
@@ -97,33 +109,56 @@ function NavBar() {
             </NavLink>
           </li>
 
-          <li>
-            <NavLink
-              to="/login"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-link active"
-                  : "nav-link"
-              }
-              onClick={closeMenu}
-            >
-              Login
-            </NavLink>
-          </li>
+          {isAuthenticated() ? (
 
-          <li>
-            <NavLink
-              to="/signup"
-              className={({ isActive }) =>
-                isActive
-                  ? "nav-link nav-link--accent active-signup"
-                  : "nav-link nav-link--accent"
-              }
-              onClick={closeMenu}
-            >
-              Sign Up
-            </NavLink>
-          </li>
+  <li>
+
+    <button
+      className="nav-link nav-link--accent"
+      onClick={handleLogout}
+    >
+      Logout
+    </button>
+
+  </li>
+
+) : (
+
+  <>
+
+    <li>
+
+      <NavLink
+        to="/login"
+        className={({ isActive }) =>
+          isActive ? "nav-link active" : "nav-link"
+        }
+        onClick={closeMenu}
+      >
+        Login
+      </NavLink>
+
+    </li>
+
+    <li>
+
+      <NavLink
+        to="/signup"
+        className={({ isActive }) =>
+          isActive
+            ? "nav-link nav-link--accent active-signup"
+            : "nav-link nav-link--accent"
+        }
+        onClick={closeMenu}
+      >
+        Sign Up
+      </NavLink>
+
+    </li>
+
+  </>
+
+)}
         </ul>
 
       </div>

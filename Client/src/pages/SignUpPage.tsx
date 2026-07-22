@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../utils/auth";
 
 import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
@@ -12,19 +13,15 @@ function SignupPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    console.log({
-      fullName,
-      email,
-      password,
-      confirmPassword,
-    });
+  login();
 
-    // TODO:
-    // Call Signup API
-  };
+  navigate("/dashboard");
+};
 
   return (
     <AuthLayout

@@ -1,0 +1,100 @@
+.dashboard {
+  min-height: calc(100vh - 64px);
+  background: var(--color-bg-primary);
+  padding: 50px 20px;
+}
+
+.dashboard-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: var(--color-white);
+  margin-bottom: 12px;
+}
+
+.dashboard-header p {
+  color: var(--color-text-muted);
+  font-size: 1.05rem;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Card containing each question */
+
+.dashboard-buttons {
+  margin-top: 32px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  padding: 13px 28px;
+  border-radius: 12px;
+
+  font-size: 0.95rem;
+  font-weight: 600;
+
+  transition: 0.25s ease;
+}
+
+.dashboard-btn.primary {
+  background: var(--color-accent-primary);
+  color: var(--color-bg-primary);
+}
+
+.dashboard-btn.primary:hover {
+  background: #a7ebf3;
+}
+
+.dashboard-btn.secondary {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: var(--color-white);
+}
+
+.dashboard-btn.secondary:hover {
+  border-color: var(--color-highlight);
+  color: var(--color-highlight);
+}
+
+.dashboard-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+@media (max-width:768px){
+
+  .dashboard{
+    padding:35px 15px;
+  }
+
+  .dashboard-header h1{
+    font-size:1.9rem;
+  }
+
+  .dashboard-buttons{
+    flex-direction:column-reverse;
+    gap:15px;
+  }
+
+  .dashboard-btn{
+    width:100%;
+  }
+
+}

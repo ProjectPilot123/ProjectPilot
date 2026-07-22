@@ -1,8 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
+import { login } from "../utils/auth";
 
 import "./Auth.css";
 
@@ -11,17 +12,15 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log({
-      email,
-      password,
-      rememberMe,
-    });
+    // TODO: Replace with API call later
+    login();
 
-    // TODO:
-    // Call Login API here
+    navigate("/dashboard");
   };
 
   return (
@@ -30,7 +29,6 @@ function LoginPage() {
       subtitle="Sign in to continue exploring AI-powered project recommendations."
     >
       <form className="auth-form" onSubmit={handleSubmit}>
-        {/* Email */}
         <div className="form-group">
           <label>Email Address</label>
 
@@ -43,7 +41,6 @@ function LoginPage() {
           />
         </div>
 
-        {/* Password */}
         <div className="form-group">
           <label>Password</label>
 
@@ -56,11 +53,8 @@ function LoginPage() {
           />
         </div>
 
-        {/* Remember + Forgot */}
         <div className="form-options">
-
           <label className="remember-me">
-
             <input
               type="checkbox"
               checked={rememberMe}
@@ -68,19 +62,12 @@ function LoginPage() {
             />
 
             <span>Remember Me</span>
-
           </label>
 
-          <Link
-            to="/forgot-password"
-            className="forgot-password"
-          >
+          <Link to="/forgot-password" className="forgot-password">
             Forgot Password?
           </Link>
-
         </div>
-
-        {/* Login Button */}
 
         <div className="auth-button">
           <Button variant="primary">
@@ -88,18 +75,12 @@ function LoginPage() {
           </Button>
         </div>
 
-        {/* Footer */}
-
         <div className="auth-footer">
-
-          <span>
-            Don't have an account?
-          </span>
+          <span>Don't have an account?</span>
 
           <Link to="/signup">
             Create Account
           </Link>
-
         </div>
       </form>
     </AuthLayout>
