@@ -20,7 +20,7 @@ function SignupPage() {
 
   login();
 
-  navigate("/dashboard");
+  navigate("/");
 };
 
   return (

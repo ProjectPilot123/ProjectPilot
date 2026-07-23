@@ -20,7 +20,7 @@ function LoginPage() {
     // TODO: Replace with API call later
     login();
 
-    navigate("/dashboard");
+    navigate("/");
   };
 
   return (
