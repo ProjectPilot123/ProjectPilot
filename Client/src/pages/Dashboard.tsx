@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
 
 import ProgressBar from "../components/ProgressBar";
 import StepCard from "../components/StepCard";
@@ -6,10 +6,24 @@ import MultiSelect from "../components/MultiSelect";
 import ThemeSelect from "../components/ThemeSelect";
 
 import "./Dashboard.css";
+import { useNavigate } from "react-router-dom";
+import { isAuthenticated, getProfile } from "../utils/auth";
 
 
 function Dashboard() {
+  const navigate = useNavigate();
 
+useEffect(() => {
+  if (!isAuthenticated()) {
+    navigate("/login");
+    return;
+  }
+
+  getProfile().catch(() => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  });
+}, [navigate]);
   const totalSteps = 6;
 
   const [currentStep, setCurrentStep] = useState(1);

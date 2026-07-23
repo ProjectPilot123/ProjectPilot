@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../utils/auth";
+import { signup } from "../utils/auth";
 
 import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
@@ -9,18 +9,30 @@ import "./Auth.css";
 
 function SignupPage() {
   const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
 
-  login();
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
 
-  navigate("/dashboard");
+  try {
+    await signup(fullName, username,email, password);
+
+    navigate("/dashboard");
+  } catch (error: any) {
+    alert(
+      error.response?.data?.message || "Signup failed"
+    );
+  }
 };
 
   return (
@@ -41,7 +53,18 @@ function SignupPage() {
             required
           />
         </div>
+        {/* Username */}
+        <div className="form-group">
+           <label>Username</label>
 
+           <input
+           type="text"
+           placeholder="Choose a username"
+           value={username}
+           onChange={(e) => setUsername(e.target.value)}
+           required
+          />
+        </div>
         {/* Email */}
         <div className="form-group">
           <label>Email Address</label>

@@ -14,15 +14,18 @@ function LoginPage() {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-    // TODO: Replace with API call later
-    login();
-
+  try {
+    await login(email, password);
     navigate("/dashboard");
-  };
-
+  } catch (error: any) {
+    alert(
+      error.response?.data?.message || "Login failed"
+    );
+  }
+};
   return (
     <AuthLayout
       title="Welcome Back"
