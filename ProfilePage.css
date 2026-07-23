@@ -1,0 +1,399 @@
+/* ==========================================================================
+   Profile Page
+   Uses the site's existing CSS variables (--color-bg-primary, --color-white,
+   --color-text-muted, --color-accent-primary, --color-highlight) and mirrors
+   the Dashboard page's spacing, card, and button conventions.
+   ========================================================================== */
+
+.profile-page {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  padding: 48px 24px 80px;
+}
+
+.profile-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ---------- Header ---------- */
+
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+}
+
+.profile-avatar-wrap {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  padding: 4px;
+  background: linear-gradient(
+    145deg,
+    var(--color-accent-primary),
+    var(--color-highlight)
+  );
+  box-shadow: 0 0 24px 4px color-mix(in srgb, var(--color-highlight) 45%, transparent);
+  margin-bottom: 8px;
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 3px solid var(--color-bg-primary);
+}
+
+.profile-name {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.profile-email {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin: 0 0 8px;
+}
+
+/* ---------- Shared buttons ---------- */
+
+.profile-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+}
+
+.profile-btn:active {
+  transform: scale(0.97);
+}
+
+.profile-btn-primary {
+  background-color: var(--color-accent-primary);
+  color: var(--color-white);
+}
+
+.profile-btn-primary:hover {
+  background-color: var(--color-highlight);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-highlight) 30%, transparent);
+}
+
+.profile-btn-secondary {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid var(--color-text-muted);
+}
+
+.profile-btn-secondary:hover {
+  border-color: var(--color-highlight);
+  color: var(--color-highlight);
+}
+
+/* ---------- Profile info card ---------- */
+
+.profile-info-card {
+  background-color: #202830;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.profile-info-card:hover {
+  border-color: color-mix(in srgb, var(--color-accent-primary) 40%, transparent);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.32);
+}
+
+.profile-info-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.profile-info-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-accent-primary);
+  flex-shrink: 0;
+}
+
+.profile-info-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.profile-info-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.profile-info-value {
+  font-size: 1rem;
+  color: var(--color-white);
+  font-weight: 500;
+}
+
+/* ---------- Saved projects section ---------- */
+
+.profile-section-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0 0 20px;
+}
+
+.profile-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.profile-project-card {
+  position: relative;
+  background-color: #202830;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-project-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--color-accent-primary) 45%, transparent);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.profile-bookmark-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: var(--color-accent-primary);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 0;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.profile-bookmark-btn:hover {
+  color: var(--color-highlight);
+  transform: scale(1.1);
+}
+
+.profile-project-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+  padding-right: 28px;
+}
+
+.profile-project-description {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.profile-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.profile-project-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  background-color: color-mix(in srgb, var(--color-accent-primary) 14%, transparent);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.profile-project-view-btn {
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+/* ---------- Empty state ---------- */
+
+.profile-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  background-color: #202830;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 56px 24px;
+}
+
+.profile-empty-icon {
+  color: var(--color-accent-primary);
+  margin-bottom: 8px;
+}
+
+.profile-empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.profile-empty-subtext {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0 0 12px;
+  max-width: 360px;
+}
+
+/* ---------- Edit Profile modal ---------- */
+
+.profile-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.profile-modal {
+  background-color: #202830;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+  padding: 28px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.profile-modal-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0 0 20px;
+}
+
+.profile-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-form-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-top: 12px;
+}
+
+.profile-form-input {
+  background-color: var(--color-bg-primary);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: var(--color-white);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.profile-form-input:focus {
+  border-color: var(--color-accent-primary);
+}
+
+.profile-form-error {
+  color: #e5734a;
+  font-size: 0.85rem;
+  margin: 8px 0 0;
+}
+
+.profile-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .profile-projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .profile-page {
+    padding: 32px 16px 64px;
+  }
+
+  .profile-info-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .profile-info-card {
+    align-items: stretch;
+  }
+
+  .profile-info-card .profile-btn {
+    width: 100%;
+  }
+
+  .profile-projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-header .profile-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .profile-project-view-btn {
+    width: 100%;
+  }
+}
