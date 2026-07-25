@@ -1,8 +1,20 @@
 const { generateProjects } = require("../services/geminiService");
+const History = require("../models/History");
 
 async function generateProjectsController(req, res) {
   try {
     const result = await generateProjects(req.validatedInput);
+
+    try {
+      await History.create({
+        user: req.user.id,
+        input: req.validatedInput,
+        generatedProjects: result.projects,
+      });
+    } catch (historyErr) {
+      console.error("Failed to save generation history:", historyErr.message);
+    }
+
     return res.status(200).json({ success: true, projects: result.projects });
   } catch (err) {
     console.error("Generation failed:", err.message);
