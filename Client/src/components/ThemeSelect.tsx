@@ -32,9 +32,10 @@ function ThemeSelect({
       <select
         className="theme-dropdown"
         value={value}
-        onChange={(e) =>
-          onChange(e.target.value)
-        }
+        onChange={(e) => {
+          console.log("Selected:", e.target.value);
+          onChange(e.target.value);
+        }}
       >
 
 

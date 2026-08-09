@@ -1,11 +1,33 @@
 const { generateProjects } = require("../services/geminiService");
+const History = require("../models/History");
 
 async function generateProjectsController(req, res) {
   try {
     const result = await generateProjects(req.validatedInput);
+
+    // Save this generation to history (don't block the response if this fails)
+    try {
+      await History.create({
+        user: req.user.id,
+        input: req.validatedInput,
+        generatedProjects: result.projects,
+      });
+    } catch (historyError) {
+      console.error("Failed to save history:", historyError.message);
+      // Don't fail the whole request just because history logging failed
+    }
+
     return res.status(200).json({ success: true, projects: result.projects });
   } catch (err) {
     console.error("Generation failed:", err.message);
+
+    if (err.isQuotaError) {
+      return res.status(429).json({
+        success: false,
+        error: "Our AI generator has hit its daily usage limit. Please try again tomorrow, or contact support.",
+      });
+    }
+
     const isGeminiOutputError = err.message?.includes("JSON") ||
       err.message?.includes("missing fields") ||
       err.message?.includes("empty");

@@ -1,7 +1,7 @@
 const { GoogleGenAI } = require("@google/genai");
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+const MODEL_NAME = process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
 
 const REQUIRED_PROJECT_FIELDS = [
   "title", "description", "difficulty", "techStack",
@@ -74,20 +74,31 @@ function validateProjectsShape(parsed) {
 }
 
 async function callGeminiOnce(prompt) {
-  const result = await ai.models.generateContent({
-    model: MODEL_NAME,
-    contents: prompt,
-  });
-  const rawText = result.text;
-  const cleanText = stripCodeFences(rawText);
-
-  let parsed;
   try {
-    parsed = JSON.parse(cleanText);
+    const result = await ai.models.generateContent({
+      model: MODEL_NAME,
+      contents: prompt,
+    });
+    const rawText = result.text;
+    const cleanText = stripCodeFences(rawText);
+
+    let parsed;
+    try {
+      parsed = JSON.parse(cleanText);
+    } catch (err) {
+      throw new Error(`Gemini did not return valid JSON: ${err.message}`);
+    }
+    return validateProjectsShape(parsed);
   } catch (err) {
-    throw new Error(`Gemini did not return valid JSON: ${err.message}`);
+    // Surface quota/rate-limit errors distinctly so we don't waste a retry on them
+    const message = err?.message || "";
+    if (message.includes("RESOURCE_EXHAUSTED") || message.includes("429") || message.includes("quota")) {
+      const quotaError = new Error("QUOTA_EXCEEDED");
+      quotaError.isQuotaError = true;
+      throw quotaError;
+    }
+    throw err;
   }
-  return validateProjectsShape(parsed);
 }
 
 async function generateProjects(input, { maxAttempts = 2 } = {}) {
@@ -99,6 +110,8 @@ async function generateProjects(input, { maxAttempts = 2 } = {}) {
     } catch (err) {
       lastError = err;
       console.warn(`Gemini attempt ${attempt} failed: ${err.message}`);
+      // Don't burn a second attempt on a quota error — it won't succeed today
+      if (err.isQuotaError) break;
     }
   }
   throw lastError;

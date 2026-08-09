@@ -7,6 +7,8 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignUpPage";
 import Dashboard from "./pages/Dashboard";
+import ResultsPage from "./pages/ResultsPage";
+import SavedProjectsPage from "./pages/SavedProjectsPage";
 
 
 function App() {
@@ -26,24 +28,30 @@ function App() {
           element={<LandingPage />}
         />
 
-
         <Route
           path="/login"
           element={<LoginPage />}
         />
-
 
         <Route
           path="/signup"
           element={<SignupPage />}
         />
 
-
         <Route
           path="/dashboard"
           element={<Dashboard />}
         />
 
+        <Route
+          path="/results"
+          element={<ResultsPage />}
+        />
+
+        <Route
+          path="/saved"
+          element={<SavedProjectsPage />}
+        />
 
       </Routes>
 

@@ -1,3 +1,9 @@
+
+const savedProjectRoutes = require("./routes/savedProjectRoutes");
+
+const historyRoutes = require("./routes/historyRoutes");
+
+
 require("dotenv").config();
 
 const express = require("express");
@@ -18,7 +24,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api",generationRoutes);
+app.use("/api", generationRoutes);
+app.use("/api/saved-projects", savedProjectRoutes);
+app.use("/api/history", historyRoutes);
 
 app.get("/health", (req, res) => res.json({ status: "ok" }));
 app.get("/", (req, res) => {
