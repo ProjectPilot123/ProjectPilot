@@ -1,9 +1,3 @@
-
-const savedProjectRoutes = require("./routes/savedProjectRoutes");
-
-const historyRoutes = require("./routes/historyRoutes");
-
-
 require("dotenv").config();
 
 const express = require("express");
