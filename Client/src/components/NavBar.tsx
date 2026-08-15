@@ -123,6 +123,16 @@ function NavBar() {
               </li>
 
               <li>
+                <NavLink
+                  to="/history"
+                  className="nav-link"
+                  onClick={closeMenu}
+                >
+                  History
+                </NavLink>
+              </li>
+
+              <li>
                 <button
                   className="nav-link nav-link--accent"
                   onClick={handleLogout}
