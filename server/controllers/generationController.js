@@ -5,16 +5,14 @@ async function generateProjectsController(req, res) {
   try {
     const result = await generateProjects(req.validatedInput);
 
-    // Save this generation to history (don't block the response if this fails)
     try {
       await History.create({
         user: req.user.id,
         input: req.validatedInput,
         generatedProjects: result.projects,
       });
-    } catch (historyError) {
-      console.error("Failed to save history:", historyError.message);
-      // Don't fail the whole request just because history logging failed
+    } catch (historyErr) {
+      console.error("Failed to save generation history:", historyErr.message);
     }
 
     return res.status(200).json({ success: true, projects: result.projects });
