@@ -12,11 +12,11 @@ function NavBar() {
 
   const navigate = useNavigate();
 
-const handleLogout = () => {
-  logout();
-  closeMenu();
-  navigate("/");
-};
+  const handleLogout = () => {
+    logout();
+    closeMenu();
+    navigate("/");
+  };
 
 
   const closeMenu = () => {
@@ -32,7 +32,7 @@ const handleLogout = () => {
         <NavLink
           to="/"
           className="navbar-logo"
-          onClick={() =>{
+          onClick={() => {
             closeMenu();
 
             window.history.replaceState(
@@ -42,8 +42,8 @@ const handleLogout = () => {
             );
 
             window.scrollTo({
-              top:0,
-              behavior:"smooth",            
+              top: 0,
+              behavior: "smooth",
             });
           }}
         >
@@ -64,30 +64,29 @@ const handleLogout = () => {
         {/* Navigation */}
 
         <ul
-          className={`navbar-links ${
-            menuOpen ? "navbar-links--open" : ""
-          }`}
+          className={`navbar-links ${menuOpen ? "navbar-links--open" : ""
+            }`}
         >
           <li>
             <NavLink
               to="/"
               className="nav-link"
               onClick={() => {
-              closeMenu();
+                closeMenu();
 
-              window.history.replaceState(
-              null,
-            "",
-          "/"
-        );
+                window.history.replaceState(
+                  null,
+                  "",
+                  "/"
+                );
 
-              window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-          }}
-        >
-              Home  
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
+            >
+              Home
             </NavLink>
           </li>
 
@@ -111,54 +110,66 @@ const handleLogout = () => {
 
           {isAuthenticated() ? (
 
-  <li>
+            <>
 
-    <button
-      className="nav-link nav-link--accent"
-      onClick={handleLogout}
-    >
-      Logout
-    </button>
+              <li>
+                <NavLink
+                  to="/saved"
+                  className="nav-link"
+                  onClick={closeMenu}
+                >
+                  Saved Projects
+                </NavLink>
+              </li>
 
-  </li>
+              <li>
+                <button
+                  className="nav-link nav-link--accent"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
 
-) : (
+            </>
 
-  <>
+          ) : (
 
-    <li>
+            <>
 
-      <NavLink
-        to="/login"
-        className={({ isActive }) =>
-          isActive ? "nav-link active" : "nav-link"
-        }
-        onClick={closeMenu}
-      >
-        Login
-      </NavLink>
+              <li>
 
-    </li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                  onClick={closeMenu}
+                >
+                  Login
+                </NavLink>
 
-    <li>
+              </li>
 
-      <NavLink
-        to="/signup"
-        className={({ isActive }) =>
-          isActive
-            ? "nav-link nav-link--accent active-signup"
-            : "nav-link nav-link--accent"
-        }
-        onClick={closeMenu}
-      >
-        Sign Up
-      </NavLink>
+              <li>
 
-    </li>
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "nav-link nav-link--accent active-signup"
+                      : "nav-link nav-link--accent"
+                  }
+                  onClick={closeMenu}
+                >
+                  Sign Up
+                </NavLink>
 
-  </>
+              </li>
 
-)}
+            </>
+
+          )}
         </ul>
 
       </div>

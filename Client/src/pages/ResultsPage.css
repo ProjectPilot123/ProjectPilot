@@ -1,0 +1,298 @@
+/* ==========================================================================
+   Results Page
+   Uses the site's existing CSS variables and mirrors the Dashboard/Profile
+   pages' spacing, card, and button conventions.
+   ========================================================================== */
+
+.results-page {
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  padding: 48px 24px 80px;
+}
+
+.results-container {
+  max-width: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+/* ---------- Header ---------- */
+
+.results-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.results-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.results-subtitle {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  margin: 0 0 20px;
+}
+
+.results-selection-summary {
+  width: 100%;
+  background-color: #202830;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  padding: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.results-selection-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.results-selection-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.results-domain-chip {
+  display: inline-block;
+  width: fit-content;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  background-color: color-mix(in srgb, var(--color-accent-primary) 14%, transparent);
+  border-radius: 999px;
+  padding: 5px 14px;
+}
+
+.results-skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.results-skill-chip {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+/* ---------- Shared buttons ---------- */
+
+.results-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.results-btn:active {
+  transform: scale(0.97);
+}
+
+.results-btn-primary {
+  background-color: var(--color-accent-primary);
+  color: var(--color-white);
+}
+
+.results-btn-primary:hover {
+  background-color: var(--color-highlight);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-highlight) 30%, transparent);
+}
+
+.results-btn-secondary {
+  background-color: transparent;
+  color: var(--color-white);
+  border: 1px solid var(--color-text-muted);
+}
+
+.results-btn-secondary:hover {
+  border-color: var(--color-highlight);
+  color: var(--color-highlight);
+}
+
+/* ---------- Project grid ---------- */
+
+.results-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.results-project-card {
+  position: relative;
+  background-color: #202830;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.results-project-card:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--color-accent-primary) 45%, transparent);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
+}
+
+.results-difficulty-badge {
+  align-self: flex-start;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-highlight);
+  background-color: color-mix(in srgb, var(--color-highlight) 14%, transparent);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.results-bookmark-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: none;
+  border: none;
+  color: var(--color-accent-primary);
+  cursor: pointer;
+  padding: 4px;
+  line-height: 0;
+  transition: color 0.2s ease, transform 0.15s ease;
+}
+
+.results-bookmark-btn:hover {
+  color: var(--color-highlight);
+  transform: scale(1.1);
+}
+
+.results-bookmark-btn-active {
+  color: var(--color-highlight);
+}
+
+.results-project-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+  padding-right: 28px;
+}
+
+.results-project-description {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.results-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.results-project-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-accent-primary);
+  background-color: color-mix(in srgb, var(--color-accent-primary) 14%, transparent);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.results-project-view-btn {
+  margin-top: 8px;
+  align-self: flex-start;
+}
+
+/* ---------- Empty state ---------- */
+
+.results-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  background-color: #202830;
+  border: 1px dashed rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  padding: 56px 24px;
+}
+
+.results-empty-icon {
+  color: var(--color-accent-primary);
+  margin-bottom: 8px;
+}
+
+.results-empty-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.results-empty-subtext {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin: 0 0 12px;
+  max-width: 380px;
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 900px) {
+  .results-projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .results-page {
+    padding: 32px 16px 64px;
+  }
+
+  .results-selection-summary {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .results-selection-summary .results-btn {
+    width: 100%;
+  }
+
+  .results-projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .results-project-view-btn {
+    width: 100%;
+  }
+}

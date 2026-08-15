@@ -18,6 +18,14 @@ async function generateProjectsController(req, res) {
     return res.status(200).json({ success: true, projects: result.projects });
   } catch (err) {
     console.error("Generation failed:", err.message);
+
+    if (err.isQuotaError) {
+      return res.status(429).json({
+        success: false,
+        error: "Our AI generator has hit its daily usage limit. Please try again tomorrow, or contact support.",
+      });
+    }
+
     const isGeminiOutputError = err.message?.includes("JSON") ||
       err.message?.includes("missing fields") ||
       err.message?.includes("empty");
