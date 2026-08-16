@@ -135,16 +135,9 @@
    ACTIVE
 ========================== */
 
-.nav-link.active {
-
-  color: var(--color-accent-primary);
-
-}
-
-.nav-link.active::after {
-
+.nav-link:hover::after,
+.nav-button:hover::after {
   width: 100%;
-
 }
 
 /* ==========================

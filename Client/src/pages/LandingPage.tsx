@@ -49,12 +49,12 @@ function LandingPage() {
   const navigate = useNavigate();
 
   const handleGenerateProjects = () => {
-  if (isAuthenticated()) {
-    navigate("/dashboard");
-  } else {
-    navigate("/signup");
-  }
-};
+    if (isAuthenticated()) {
+      navigate("/dashboard");
+    } else {
+      navigate("/signup");
+    }
+  };
 
   return (
     <>
@@ -64,10 +64,10 @@ function LandingPage() {
           {/* Left side: text content */}
           <div className="hero-content">
             <h1 className="hero-title">
-            <div className="hero-badge">
-            ✨<span>AI-Powered</span>Project Recommendation</div>
-            <span className="hero-white">Project</span>
-            <span className="hero-blue">Pilot</span></h1>
+              <div className="hero-badge">
+                ✨<span>AI-Powered</span>Project Recommendation</div>
+              <span className="hero-white">Project</span>
+              <span className="hero-blue">Pilot</span></h1>
             <h2 className="hero-subtitle">
               Generate personalized software project ideas using AI.
             </h2>
@@ -83,7 +83,16 @@ function LandingPage() {
                 onClick={handleGenerateProjects}>
                 Generate Projects
               </Button>
-              <Button variant="secondary">Learn More</Button>
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  document.getElementById("features")?.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                Learn More
+              </Button>
             </div>
           </div>
 
@@ -97,49 +106,49 @@ function LandingPage() {
       {/* ===== Section 3: Features Section ===== */}
       <section className="section" id="features">
         <div className="section-container">
-        <h2 className="section-heading">Why Choose ProjectPilot?</h2>
+          <h2 className="section-heading">Why Choose ProjectPilot?</h2>
 
-        <p className="section-text" style={{ marginBottom: "48px" }}>
-        Everything you need to find your next great project idea.</p>
+          <p className="section-text" style={{ marginBottom: "48px" }}>
+            Everything you need to find your next great project idea.</p>
 
-        <div className="features-grid">
-          {features.map((feature) => (
-            <FeatureCard
-              key={feature.title}
-              icon={feature.icon}
-              title={feature.title}
-              description={feature.description}
+          <div className="features-grid">
+            {features.map((feature) => (
+              <FeatureCard
+                key={feature.title}
+                icon={feature.icon}
+                title={feature.title}
+                description={feature.description}
               />
             ))}
           </div>
-         </div>
+        </div>
       </section>
 
       {/* ===== Section 4: About Section ===== */}
       <section className="section" id="about">
         <div className="section-container">
 
-        <h2 className="section-heading about-heading">About ProjectPilot</h2>
-        <div className="about-section">
-        <div className="about-content">
-          <p>
-            Every year, thousands of students spend hours — sometimes days —
-            trying to decide what project to build. Whether it is for a college
-            assignment, a personal portfolio, or a hackathon, finding the right
-            idea that matches your skill level is one of the biggest challenges.
-          </p>
-          <p>
-            ProjectPilot solves this problem by using AI to generate personalized
-            software project ideas based on your skills, interests, and the
-            technologies you want to learn. Instead of scrolling through
-            generic project lists, you get suggestions that are tailored
-            specifically to you.
-          </p>
-          <p>
-            Our goal is simple: help every developer build something meaningful
-            without the stress of coming up with an idea. Let ProjectPilot be
-            your personal project brainstorming assistant.
-            </p>
+          <h2 className="section-heading about-heading">About ProjectPilot</h2>
+          <div className="about-section">
+            <div className="about-content">
+              <p>
+                Every year, thousands of students spend hours — sometimes days —
+                trying to decide what project to build. Whether it is for a college
+                assignment, a personal portfolio, or a hackathon, finding the right
+                idea that matches your skill level is one of the biggest challenges.
+              </p>
+              <p>
+                ProjectPilot solves this problem by using AI to generate personalized
+                software project ideas based on your skills, interests, and the
+                technologies you want to learn. Instead of scrolling through
+                generic project lists, you get suggestions that are tailored
+                specifically to you.
+              </p>
+              <p>
+                Our goal is simple: help every developer build something meaningful
+                without the stress of coming up with an idea. Let ProjectPilot be
+                your personal project brainstorming assistant.
+              </p>
             </div>
           </div>
         </div>

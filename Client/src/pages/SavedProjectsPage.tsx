@@ -17,6 +17,7 @@ interface SavedProject {
 
 function SavedProjectsPage() {
   const navigate = useNavigate();
+
   const [projects, setProjects] = useState<SavedProject[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -29,7 +30,7 @@ function SavedProjectsPage() {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5000/api/saved-projects", {
+    fetch(`${import.meta.env.VITE_API_URL}/api/saved-projects`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -41,6 +42,7 @@ function SavedProjectsPage() {
         } else {
           setError(data.message || "Could not load saved projects.");
         }
+
         setLoading(false);
       })
       .catch((err) => {
@@ -54,17 +56,22 @@ function SavedProjectsPage() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://localhost:5000/api/saved-projects/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/saved-projects/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       const data = await res.json();
 
       if (data.success) {
-        setProjects((prev) => prev.filter((p) => p._id !== id));
+        setProjects((prev) =>
+          prev.filter((p) => p._id !== id)
+        );
       } else {
         alert(data.message || "Could not delete project.");
       }
@@ -74,55 +81,110 @@ function SavedProjectsPage() {
     }
   };
 
+  const handleViewRoadmap = (project: SavedProject) => {
+    navigate("/roadmap", {
+      state: {
+        project,
+
+        // Saved projects don't currently store the original
+        // Dashboard selections, so use the project's tech stack.
+        skills: project.techStack ?? [],
+
+        // Use the project's difficulty as a reasonable fallback.
+        experienceLevel: project.difficulty || "Intermediate",
+      },
+    });
+  };
+
   return (
     <div className="results-page">
       <div className="results-container">
+
         <header className="results-header">
-          <h1 className="results-title">Your Saved Projects</h1>
+          <h1 className="results-title">
+            Your Saved Projects
+          </h1>
+
           <p className="results-subtitle">
             Projects you've saved for later
           </p>
         </header>
 
         <section className="results-projects-section">
+
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
-            <p style={{ color: "#ff4d4f" }}>{error}</p>
+            <p style={{ color: "#ff4d4f" }}>
+              {error}
+            </p>
           ) : projects.length === 0 ? (
             <p>You haven't saved any projects yet.</p>
           ) : (
             <div className="results-projects-grid">
+
               {projects.map((project) => (
-                <div key={project._id} className="results-project-card">
+                <div
+                  key={project._id}
+                  className="results-project-card"
+                >
                   <span className="results-difficulty-badge">
                     {project.difficulty}
                   </span>
 
-                  <h3 className="results-project-title">{project.title}</h3>
+                  <h3 className="results-project-title">
+                    {project.title}
+                  </h3>
+
                   <p className="results-project-description">
                     {project.description}
                   </p>
 
                   <div className="results-project-tags">
                     {project.techStack.map((skill) => (
-                      <span key={skill} className="results-project-tag">
+                      <span
+                        key={skill}
+                        className="results-project-tag"
+                      >
                         {skill}
                       </span>
                     ))}
                   </div>
 
-                  <button
-                    type="button"
-                    className="results-btn results-btn-primary results-project-view-btn"
-                    onClick={() => handleDelete(project._id)}
+                  <div
+                    className="results-project-actions"
+                    style={{
+                      display: "flex",
+                      gap: "10px",
+                      marginTop: "16px",
+                    }}
                   >
-                    Remove
-                  </button>
+                    <button
+                      type="button"
+                      className="results-btn results-btn-primary results-project-view-btn"
+                      onClick={() =>
+                        handleViewRoadmap(project)
+                      }
+                    >
+                      View Roadmap
+                    </button>
+
+                    <button
+                      type="button"
+                      className="results-btn results-btn-secondary"
+                      onClick={() =>
+                        handleDelete(project._id)
+                      }
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               ))}
+
             </div>
           )}
+
         </section>
       </div>
     </div>

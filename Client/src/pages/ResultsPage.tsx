@@ -1,125 +1,97 @@
-import { useMemo, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import ResultProjectCard from '../components/ResultProjectCard';
-import EmptyResultsState from '../components/EmptyResultsState';
-import type { RecommendedProject } from '../utils/types';
-import './ResultsPage.css';
-
-interface LocationState {
-  projects?: any[];
-}
-
-interface DisplayProject extends RecommendedProject {
-  estimatedDays?: string;
-  roadmap?: string[];
-  resumeValue?: string;
-  uniqueSellingPoint?: string;
-}
+import { useLocation, useNavigate } from "react-router-dom";
+import ResultProjectCard from "../components/ResultProjectCard";
+import "./ResultsPage.css";
 
 function ResultsPage() {
-  const navigate = useNavigate();
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const rawProjects = (location.state as LocationState)?.projects ?? [];
+  console.log("🔥 RESULTS PAGE LOADED");
+  console.log("🔥 LOCATION STATE:", location.state);
 
-  const recommendedProjects: DisplayProject[] = useMemo(() => {
-    return rawProjects.map((p, index) => ({
-      id: p.id ?? `project-${index}`,
-      title: p.title ?? 'Untitled Project',
-      description: p.description ?? p.pitch ?? '',
-      skills: p.techStack ?? p.skills ?? [],
-      domain: p.domain ?? '',
-      difficulty: p.difficulty ?? 'Intermediate',
-      projectUrl: p.projectUrl,
-      matchScore: 100,
-      estimatedDays: p.estimatedDays,
-      roadmap: p.roadmap,
-      resumeValue: p.resumeValue,
-      uniqueSellingPoint: p.uniqueSellingPoint,
-    }));
-  }, [rawProjects]);
+  const state = location.state as {
+    projects?: any[];
+    skills?: string[];
+    experienceLevel?: string;
+  } | null;
 
-  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
+  const projects = state?.projects ?? [];
+  const skills = state?.skills ?? [];
+  const experienceLevel = state?.experienceLevel ?? "Beginner";
 
-  const handleToggleSave = (id: string) => {
-    setSavedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) {
-        next.delete(id);
-      } else {
-        next.add(id);
-      }
-      return next;
-    });
-  };
+  console.log("🔥 PROJECTS:", projects);
 
-  const handleSaveProject = async (project: DisplayProject) => {
+  const handleSave = async (project: any) => {
+  try {
     const token = localStorage.getItem("token");
 
-    try {
-      const res = await fetch("http://localhost:5000/api/saved-projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          title: project.title,
-          description: project.description,
-          difficulty: project.difficulty,
-          techStack: project.skills,
-          estimatedDays: project.estimatedDays,
-          roadmap: project.roadmap,
-          resumeValue: project.resumeValue,
-          uniqueSellingPoint: project.uniqueSellingPoint,
-        })
-      });
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/saved-projects`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(project),
+    });
 
-      const data = await res.json();
-
-      if (data.success) {
-        handleToggleSave(project.id);
-        alert("Project saved successfully!");
-      } else {
-        alert(data.message || "Could not save project.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Something went wrong while saving.");
+    if (!res.ok) {
+      throw new Error(`Save failed with status ${res.status}`);
     }
-  };
 
-  const handleEditSelections = () => {
-    navigate('/dashboard');
-  };
+    const data = await res.json();
+    console.log("Project saved:", data);
+    alert("Project saved successfully!");
+  } catch (err) {
+    console.error("Error saving project:", err);
+    alert("Failed to save project. Please try again.");
+  }
+};
 
   return (
     <div className="results-page">
       <div className="results-container">
+
         <header className="results-header">
-          <h1 className="results-title">Your Generated Projects</h1>
+          <h1 className="results-title">
+            Your Generated Projects
+          </h1>
+
           <p className="results-subtitle">
             AI-generated project ideas based on your selections
           </p>
         </header>
 
-        <section className="results-projects-section">
-          {recommendedProjects.length === 0 ? (
-            <EmptyResultsState onEditSelections={handleEditSelections} />
-          ) : (
-            <div className="results-projects-grid">
-              {recommendedProjects.map((project) => (
-                <ResultProjectCard
-                  key={project.id}
-                  project={project}
-                  isSaved={savedIds.has(project.id)}
-                  onToggleSave={handleToggleSave}
-                  onSave={handleSaveProject}
-                />
-              ))}
-            </div>
-          )}
-        </section>
+        {projects.length === 0 ? (
+          <div className="results-empty-state">
+            <h2 className="results-empty-title">
+              No projects found
+            </h2>
+
+            <p className="results-empty-subtext">
+              The AI didn't return any projects.
+            </p>
+
+            <button
+              className="results-btn results-btn-primary"
+              onClick={() => navigate("/dashboard")}
+            >
+              Back to Dashboard
+            </button>
+          </div>
+        ) : (
+          <div className="results-projects-grid">
+            {projects.map((project, index) => (
+              <ResultProjectCard
+                key={project._id || project.id || `project-${index}`}
+                project={project}
+                skills={skills}
+                experienceLevel={experienceLevel}
+                onSave={handleSave}
+              />
+            ))}
+          </div>
+        )}
+
       </div>
     </div>
   );

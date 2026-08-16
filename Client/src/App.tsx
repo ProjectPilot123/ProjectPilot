@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import ResultsPage from "./pages/ResultsPage";
 import SavedProjectsPage from "./pages/SavedProjectsPage";
 import HistoryPage from "./pages/HistoryPage";
+import RoadmapPage from "./pages/RoadmapPage";
 
 function App() {
   return (
@@ -40,6 +41,15 @@ function App() {
           element={<SavedProjectsPage />}
         />
         <Route
+          path="/roadmap"
+          element={<RoadmapPage />}
+        />
+
+        <Route
+          path="/roadmap/:id"
+          element={<RoadmapPage />}
+        />
+        <Route
           path="/history"
           element={<HistoryPage />}
         />
@@ -47,5 +57,6 @@ function App() {
     </BrowserRouter>
   );
 }
+
 
 export default App;

@@ -123,8 +123,8 @@
 }
 
 .results-btn-primary:hover {
-  background-color: var(--color-highlight);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-highlight) 30%, transparent);
+  background-color: var(--color-accent-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-primary) 30%, transparent);
 }
 
 .results-btn-secondary {
