@@ -1,63 +1,130 @@
-import type { RecommendedProject } from '../utils/types';
+import { useNavigate } from "react-router-dom";
+
+interface Project {
+  _id?: string;
+  id?: string;
+  title?: string;
+  name?: string;
+  description?: string;
+  technologies?: unknown;
+  techStack?: unknown;
+  skills?: unknown;
+  difficulty?: string;
+  domain?: string;
+  projectUrl?: string;
+  estimatedDays?: string;
+  roadmap?: string[];
+  resumeValue?: string;
+  uniqueSellingPoint?: string;
+}
 
 interface ResultProjectCardProps {
-  project: RecommendedProject;
-  isSaved: boolean;
-  onToggleSave: (id: string) => void;
-  onSave: (project: any) => void;
+  project: Project;
+  skills?: string[];
+  experienceLevel?: string;
+  onSave?: (project: Project) => void;
+  isSaved?: boolean;
 }
 
-function ResultProjectCard({
+const ResultProjectCard = ({
   project,
-  isSaved,
-  onToggleSave,
+  skills = [],
+  experienceLevel = "",
   onSave,
-}: ResultProjectCardProps) {
+  isSaved = false,
+}: ResultProjectCardProps) => {
+  const navigate = useNavigate();
+
+  const title = project.title || project.name || "Untitled Project";
+
+  // Safely handle whatever Gemini sends
+  const rawTechnologies =
+    project.technologies ??
+    project.techStack ??
+    project.skills ??
+    [];
+
+  const technologies: string[] = Array.isArray(rawTechnologies)
+    ? rawTechnologies.map(String)
+    : [];
+
+  const handleViewRoadmap = () => {
+    console.log("Opening roadmap for:", project);
+
+    navigate("/roadmap", {
+      state: {
+        project,
+        skills,
+        experienceLevel,
+      },
+    });
+  };
+
+  const handleSave = () => {
+    if (onSave) {
+      onSave(project);
+    }
+  };
+
   return (
     <div className="results-project-card">
-      <button
-        type="button"
-        className={`results-bookmark-btn${isSaved ? ' results-bookmark-btn-active' : ''}`}
-        aria-label={
-          isSaved
-            ? `Remove ${project.title} from saved projects`
-            : `Save ${project.title} to your profile`
-        }
-        onClick={() => onToggleSave(project.id)}
+      {project.difficulty && (
+        <span className="results-difficulty-badge">
+          {project.difficulty}
+        </span>
+      )}
+
+      <h3 className="results-project-title">
+        {title}
+      </h3>
+
+      {project.description && (
+        <p className="results-project-description">
+          {project.description}
+        </p>
+      )}
+
+      {technologies.length > 0 && (
+        <div className="results-project-tags">
+          {technologies.map((technology, index) => (
+            <span
+              key={`${technology}-${index}`}
+              className="results-project-tag"
+            >
+              {technology}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div
+        style={{
+          display: "flex",
+          gap: "10px",
+          flexWrap: "wrap",
+          marginTop: "8px",
+        }}
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
-          <path
-            d="M6 3a2 2 0 0 0-2 2v16l8-5 8 5V5a2 2 0 0 0-2-2H6Z"
-            fill={isSaved ? 'currentColor' : 'none'}
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
+        <button
+          type="button"
+          onClick={handleViewRoadmap}
+          className="results-btn results-btn-primary results-project-view-btn"
+        >
+          View Roadmap
+        </button>
 
-      <span className="results-difficulty-badge">{project.difficulty}</span>
-
-      <h3 className="results-project-title">{project.title}</h3>
-      <p className="results-project-description">{project.description}</p>
-
-      <div className="results-project-tags">
-        {project.skills.map((skill) => (
-          <span key={skill} className="results-project-tag">
-            {skill}
-          </span>
-        ))}
+        {onSave && (
+          <button
+            type="button"
+            onClick={handleSave}
+            className="results-btn results-btn-secondary"
+          >
+            {isSaved ? "Saved ✓" : "Save Project"}
+          </button>
+        )}
       </div>
-
-      <button
-        type="button"
-        className="results-btn results-btn-primary results-project-view-btn"
-        onClick={() => onSave(project)}
-      >
-        {isSaved ? 'Saved ✓' : 'Save Project'}
-      </button>
     </div>
   );
-}
+};
 
 export default ResultProjectCard;

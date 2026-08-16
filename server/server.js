@@ -8,6 +8,7 @@ const generationRoutes = require("./routes/generationRoutes");
 const authRoutes = require("./routes/authRoutes");
 const historyRoutes = require("./routes/historyRoutes");
 const savedProjectRoutes = require("./routes/savedProjectRoutes");
+const roadmapRoutes = require("./routes/roadmapRoutes");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api", generationRoutes);
 app.use("/api/history", historyRoutes);
 app.use("/api/saved-projects", savedProjectRoutes);
+app.use("/api/roadmap", roadmapRoutes);
 
 app.get("/health", (req, res) => res.json({ status: "ok" }));
 app.get("/", (req, res) => {

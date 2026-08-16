@@ -9,7 +9,6 @@ import "./Dashboard.css";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated, getProfile } from "../utils/auth";
 
-
 function Dashboard() {
   const navigate = useNavigate();
 
@@ -41,29 +40,32 @@ function Dashboard() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-
-  const nextStep = () => {
-
+  const nextStep = async () => {
     if (currentStep === 1 && skills.length === 0) {
       setErrorMessage("Please select at least one skill to continue.");
       return;
     }
+
     if (currentStep === 2 && experience === "") {
       setErrorMessage("Please select your experience level to continue.");
       return;
     }
+
     if (currentStep === 3 && interests.length === 0) {
       setErrorMessage("Please select at least one area of interest to continue.");
       return;
     }
+
     if (currentStep === 4 && techStack.length === 0) {
       setErrorMessage("Please select at least one tech stack to continue.");
       return;
     }
+
     if (currentStep === 5 && duration === "") {
       setErrorMessage("Please select a project duration to continue.");
       return;
     }
+
     if (currentStep === 6 && platform.length === 0) {
       setErrorMessage("Please select at least one target platform to continue.");
       return;
@@ -74,33 +76,93 @@ function Dashboard() {
     if (currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
     }
+
     else {
       const token = localStorage.getItem("token");
 
-      fetch("http://localhost:5000/api/generate-projects", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
+      if (!token) {
+        setErrorMessage("You are not logged in. Please log in again.");
+        navigate("/login");
+        return;
+      }
+
+      try {
+        console.log("🚀 Starting project generation...");
+
+        const requestBody = {
           skills,
           experienceLevel: experience,
           interests,
           techStack,
           projectDuration: duration,
-          targetPlatform: platform
-        })
-      })
-        .then(res => res.json())
-        .then(data => {
-          navigate("/results", { state: { projects: data.projects } });
-        })
-        .catch(err => console.error(err));
+          targetPlatform: platform,
+        };
+
+        console.log("📤 Sending:", requestBody);
+
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/generate-projects`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(requestBody),
+          }
+        );
+
+        console.log("📥 Response status:", response.status);
+
+        const data = await response.json();
+
+        console.log("📦 Backend response:", data);
+
+        if (!response.ok) {
+          setErrorMessage(
+            data.error ||
+            data.message ||
+            "Failed to generate projects."
+          );
+          return;
+        }
+
+        if (!data.success) {
+          setErrorMessage(
+            data.error ||
+            data.message ||
+            "Project generation failed."
+          );
+          return;
+        }
+
+        if (!Array.isArray(data.projects)) {
+          console.error("❌ Invalid projects:", data.projects);
+          setErrorMessage("No projects were returned by the AI.");
+          return;
+        }
+
+        console.log("✅ Projects generated:", data.projects);
+
+        navigate("/results", {
+          state: {
+            projects: data.projects,
+            skills,
+            experienceLevel: experience,
+          },
+        });
+
+      } catch (error) {
+        console.error("❌ Generation request failed:", error);
+
+        setErrorMessage(
+          error instanceof Error
+            ? error.message
+            : "Something went wrong while generating projects."
+        );
+      }
     }
-
   };
-
 
   const previousStep = () => {
     if (currentStep > 1) {
@@ -109,13 +171,9 @@ function Dashboard() {
     }
   };
 
-
   return (
-
     <div className="dashboard">
-
       <div className="dashboard-container">
-
         <div className="dashboard-header">
           <h1>Tell us about your project</h1>
           <p>Answer a few questions and let AI suggest projects for you.</p>
@@ -127,14 +185,24 @@ function Dashboard() {
         />
 
         <StepCard>
-
           {currentStep === 1 && (
             <MultiSelect
               title="Select Your Skills"
               options={[
-                "C", "C++", "Java", "Python", "JavaScript", "TypeScript",
-                "React", "Node.js", "Express", "MongoDB", "SQL",
-                "Flutter", "Django", "Spring Boot"
+                "C",
+                "C++",
+                "Java",
+                "Python",
+                "JavaScript",
+                "TypeScript",
+                "React",
+                "Node.js",
+                "Express",
+                "MongoDB",
+                "SQL",
+                "Flutter",
+                "Django",
+                "Spring Boot",
               ]}
               selected={skills}
               onChange={setSkills}
@@ -154,9 +222,16 @@ function Dashboard() {
             <MultiSelect
               title="Areas of Interest"
               options={[
-                "AI / ML", "Web Development", "Mobile Development",
-                "Cyber Security", "Cloud Computing", "DevOps",
-                "Blockchain", "Data Science", "IoT", "Productivity"
+                "AI / ML",
+                "Web Development",
+                "Mobile Development",
+                "Cyber Security",
+                "Cloud Computing",
+                "DevOps",
+                "Blockchain",
+                "Data Science",
+                "IoT",
+                "Productivity",
               ]}
               selected={interests}
               onChange={setInterests}
@@ -167,8 +242,14 @@ function Dashboard() {
             <MultiSelect
               title="Preferred Tech Stack"
               options={[
-                "MERN", "MEAN", "Flutter", "React Native",
-                "Django", "Spring Boot", ".NET", "Next.js"
+                "MERN",
+                "MEAN",
+                "Flutter",
+                "React Native",
+                "Django",
+                "Spring Boot",
+                ".NET",
+                "Next.js",
               ]}
               selected={techStack}
               onChange={setTechStack}
@@ -178,7 +259,13 @@ function Dashboard() {
           {currentStep === 5 && (
             <ThemeSelect
               title="Project Duration"
-              options={["1 Week", "2 Weeks", "1 Month", "2 Months", "3+ Months"]}
+              options={[
+                "1 Week",
+                "2 Weeks",
+                "1 Month",
+                "2 Months",
+                "3+ Months",
+              ]}
               value={duration}
               onChange={setDuration}
             />
@@ -187,22 +274,33 @@ function Dashboard() {
           {currentStep === 6 && (
             <MultiSelect
               title="Target Platform"
-              options={["Web", "Mobile", "Desktop", "AI Model", "API", "CLI"]}
+              options={[
+                "Web",
+                "Mobile",
+                "Desktop",
+                "AI Model",
+                "API",
+                "CLI",
+              ]}
               selected={platform}
               onChange={setPlatform}
             />
           )}
-
         </StepCard>
 
         {errorMessage && (
-          <p style={{ color: "#ff4d4f", marginTop: "10px", fontSize: "14px" }}>
+          <p
+            style={{
+              color: "#ff4d4f",
+              marginTop: "10px",
+              fontSize: "14px",
+            }}
+          >
             {errorMessage}
           </p>
         )}
 
         <div className="dashboard-buttons">
-
           <button
             className="dashboard-btn secondary"
             onClick={previousStep}
@@ -215,18 +313,14 @@ function Dashboard() {
             className="dashboard-btn primary"
             onClick={nextStep}
           >
-            {currentStep === totalSteps ? "Generate Projects" : "Next"}
+            {currentStep === totalSteps
+              ? "Generate Projects"
+              : "Next"}
           </button>
-
         </div>
-
       </div>
-
     </div>
-
   );
-
 }
-
 
 export default Dashboard;

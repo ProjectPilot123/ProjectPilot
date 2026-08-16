@@ -36,7 +36,7 @@ function HistoryPage() {
 
         const token = localStorage.getItem("token");
 
-        fetch("http://localhost:5000/api/history", {
+        fetch(`${import.meta.env.VITE_API_URL}/api/history`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -61,7 +61,7 @@ function HistoryPage() {
         const token = localStorage.getItem("token");
 
         try {
-            const res = await fetch(`http://localhost:5000/api/history/${id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/history/${id}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
