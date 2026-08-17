@@ -29,6 +29,22 @@
   line-height: 1.7;
 }
 
+.dashboard-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(110, 231, 216, 0.3);
+  border-top-color: #6ee7d8;
+  border-radius: 50%;
+  display: inline-block;
+  animation: dashboard-spin 0.6s linear infinite;
+}
+
+@keyframes dashboard-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Card containing each question */
 
 .dashboard-buttons {

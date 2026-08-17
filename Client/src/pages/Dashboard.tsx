@@ -40,6 +40,9 @@ function Dashboard() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
+  // NEW: tracks whether we're waiting on the AI to generate projects
+  const [isGenerating, setIsGenerating] = useState(false);
+
   const nextStep = async () => {
     if (currentStep === 1 && skills.length === 0) {
       setErrorMessage("Please select at least one skill to continue.");
@@ -85,6 +88,8 @@ function Dashboard() {
         navigate("/login");
         return;
       }
+
+      setIsGenerating(true); // start loading state
 
       try {
         console.log("🚀 Starting project generation...");
@@ -160,6 +165,8 @@ function Dashboard() {
             ? error.message
             : "Something went wrong while generating projects."
         );
+      } finally {
+        setIsGenerating(false); // stop loading state, success or fail
       }
     }
   };
@@ -300,11 +307,28 @@ function Dashboard() {
           </p>
         )}
 
+        {/* NEW: loading message shown only while generating */}
+        {isGenerating && (
+          <p
+            style={{
+              color: "#6ee7d8",
+              marginTop: "10px",
+              fontSize: "14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+            }}
+          >
+            <span className="dashboard-spinner" />
+            Generating your projects... this can take a few seconds.
+          </p>
+        )}
+
         <div className="dashboard-buttons">
           <button
             className="dashboard-btn secondary"
             onClick={previousStep}
-            disabled={currentStep === 1}
+            disabled={currentStep === 1 || isGenerating}
           >
             Previous
           </button>
@@ -312,8 +336,11 @@ function Dashboard() {
           <button
             className="dashboard-btn primary"
             onClick={nextStep}
+            disabled={isGenerating}
           >
-            {currentStep === totalSteps
+            {isGenerating
+              ? "Generating..."
+              : currentStep === totalSteps
               ? "Generate Projects"
               : "Next"}
           </button>
