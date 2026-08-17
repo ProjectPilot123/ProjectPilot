@@ -17,7 +17,7 @@ import type {
   RoadmapSourceProject,
 } from "../utils/roadmap";
 
-import "./RoadmapPage.css";
+import "./Roadmappage.css";
 
 interface GenerationLocationState {
   project?: RoadmapSourceProject;
